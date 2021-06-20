@@ -3,7 +3,7 @@ const h : number = window.innerHeight
 const parts : number = 4 
 const strokeFactor : number = 90 
 const sizeFactor : number = 8.9 
-const scGap : number = 0.02 / parts 
+const scGap : number = 0.04 / parts 
 const deg : number = Math.PI
 const delay : number = 20 
 const backColor : string = "#bdbdbd"
@@ -44,12 +44,16 @@ class DrawingUtil {
         context.save()
         context.translate(w / 2 + (w / 2 + size) * sc4, h / 2)
         context.rotate(deg * sc4)
-        DrawingUtil.drawLine(context, 0, -size * sc1, 0, size * sc1)
+        if (sc1 > 0) {
+            DrawingUtil.drawLine(context, 0, -size * sc1, 0, size * sc1)
+        }
         for (var j = 0; j < 2; j++) {
             context.save()
             context.scale(1 - 2 * j, 1 - 2 * j)
             const scj : number = ScaleUtil.divideScale(scale, j + 1, parts)
-            DrawingUtil.drawLine(context, 0, -size / 2, size * 0.5 * scj, -size / 2)
+            if (scj > 0) {
+                DrawingUtil.drawLine(context, 0, -size, size * scj, -size)
+            }
             context.restore()
         }
         context.restore()
