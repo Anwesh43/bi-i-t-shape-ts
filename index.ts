@@ -202,3 +202,25 @@ class BiITShape {
         this.curr.startUpdating(cb)
     }
 }
+
+class Renderer {
+
+    bits : BiITShape = new BiITShape()
+    animator : Animator = new Animator()
+
+    render(context : CanvasRenderingContext2D) {
+        this.bits.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.bits.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.bits.update(() => {
+                    this.animator.stop()
+                    cb()
+                })
+            })
+        })
+    }
+}
